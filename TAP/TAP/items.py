@@ -8,7 +8,7 @@ import scrapy
 
 class TapItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    # name = scrapy.Field(
     t_id = scrapy.Field()
     t_name = scrapy.Field()
     t_link = scrapy.Field()
