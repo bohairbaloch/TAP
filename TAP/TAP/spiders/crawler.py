@@ -75,4 +75,27 @@ class Crawler1Spider(CrawlSpider):
                 # loader.add_xpath('group_id', "//h2[@id='groups']/following::tbody//tr//td[1]//a//text()")
                 yield soft_loader.load_item()
 
+        elif 'techniques/' in response.url:
+            technique_id = response.xpath("//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()").get()
+            #response.xpath("//div/table[@class='table-techniques' and contains(text(), '')]").get()
+            #response.xpath("(//table[@class='table-techniques'])/tbody/tr//td/a/text()").get()
+            if technique_id is not None:
+
+                loader = ItemLoader(item=TacticItem(), response=response)
+                loader.add_xpath('technique_id', "//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()")
+                loader.add_xpath('name', "//h1//text()")
+                loader.add_xpath('date_created', "//div//*[contains(text(), 'Created:')]//parent::div/text()")
+                loader.add_xpath('tactic_desc', "//div[@class='description-body']//p//text()")
+                loader.add_xpath('date_modified', "//div//*[contains(text(), 'Last Modified:')]//parent::div/text()")
+
+                #Parse Technique Data
+                technique_rows = response.xpath("//h2[@id='techniques']/following::table/tbody/tr")
+                if len(technique_rows) >= 1:
+                #for index, row in enumerate(technique_rows):
+                    loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
+                else:
+                    loader.add_value('technique_id', 'Null')
+                    #loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
+                    #loader.add_xpath('technique_name', "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
+                yield loader.load_item()
 
