@@ -29,6 +29,7 @@ class SqlPipeline:
         self.curr = self.conn.cursor()
         self.create_tactic_table()
         self.create_software_table()
+        self.create_technique_table()
 
     def create_tactic_table(self):
         ##Create table if none exists
@@ -48,6 +49,14 @@ class SqlPipeline:
         software_desc TEXT           
         )""")
 
+    def create_technique_table(self):
+        ##Create table if none exists
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS tbl_technique(
+        technique_id TEXT PRIMARY KEY,
+        technique_name TEXT,
+        date_created TEXT,
+        technique_desc TEXT           
+        )""")
     def process_item(self, item, spider):
         if isinstance(item, TacticItem):
             #print("BeforeDBCall:", item)
@@ -78,6 +87,17 @@ class SqlPipeline:
         self.conn.commit()
         return item
 
+    # store techniques
+    def store_tech(self, item):
+        ##Insert data statement
+        print("TechniqueSQLDB:", item)
+        self.curr.execute(
+            """INSERT OR IGNORE INTO tbl_technique (technique_id, technique_name, date_created, technique_desc) VALUES (?,?,?,?)""", (
+                (item['technique_id'], item['technique_name'], item['date_created'], item['technique_desc'])))
+        self.conn.commit()
+        return item
+
+
 class SecondPipeline:
     def process_item(self, item, spider):
         return item
@@ -86,12 +106,13 @@ class SecondPipeline:
 class MongoDBPipeLine:
     #MongoDB Pipeline
 
-    def __init__(self, mongo_uri, mongo_db, mongo_coll, mongo_coll_soft):
+    def __init__(self, mongo_uri, mongo_db, mongo_coll, mongo_coll_soft, mongo_coll_tech):
         #Initiliaze the pipeline with MonogoDB details in settings.py
         self.mongo_uri = mongo_uri
         self.mongo_db = mongo_db
         self.mongo_coll = mongo_coll
         self.mongo_coll_soft = mongo_coll_soft
+        self.mongo_coll_tech = mongo_coll_tech
 
 
     @classmethod
@@ -102,6 +123,7 @@ class MongoDBPipeLine:
             mongo_db=crawler.settings.get('MONGO_DATABASE', 'scrapy'),
             mongo_coll=crawler.settings.get('MONGO_COLL_TACTICS', 'tactics'),
             mongo_coll_soft=crawler.settings.get('MONGO_COLL_SOFTWARE', 'software'),
+            mongo_coll_tech=crawler.settings.get('MONGO_COLL_TECHNIQUE', 'technique')
         )
 
     def open_spider(self, spider):
@@ -115,6 +137,7 @@ class MongoDBPipeLine:
         self.db = self.client[self.mongo_db]
         self.collecion = self.db[self.mongo_coll]
         self.collecion1= self.db[self.mongo_coll_soft]
+        self.collecion2 = self.db[self.mongo_coll_tech]
 
     def close_spider(self, spider):
         #Clean after spider is closed
@@ -152,3 +175,20 @@ class MongoDBPipeLine:
                 #self.collecion.insert_one(item_dict)
                 logging.debug("Item added to MongoDB")
                 print("MongoSoftware Item :", item)
+
+        # process technique item
+        if isinstance(item, TechniqueTapItem):
+            exists = self.db[self.mongo_coll_tech].find_one_and_update(
+                {"technique_id": dict(item)["technique_id"]},
+                # logging.debug("Technique Item already exists")
+                {"$set": dict(item)},
+                # upsert=True
+            )
+            if not exists:
+                self.db[self.mongo_coll_tech].insert_one(dict(item))
+                # self.db['MONGO_COLL_TECHNIQUE'].insert_one(dict(item))
+                # item_dict = ItemAdapter(TechniqueItem).asdict()
+                # self.collecion.insert_one(item_dict)
+                logging.debug("Item added to MongoDB")
+                print("MongoTechnique Item :", item)
+

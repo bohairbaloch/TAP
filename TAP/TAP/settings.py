@@ -85,6 +85,7 @@ MONGO_URI = "mongodb+srv://userid:password@exampledomain.com/?retryWrites=true&w
 MONGO_DATABASE ="scrapy"
 MONGO_COLL_TACTICS ="tactics"
 MONGO_COLL_SOFTWARE ="software"
+MONGO_COLL_TECHNIQUE ="technique"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

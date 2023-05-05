@@ -81,21 +81,28 @@ class Crawler1Spider(CrawlSpider):
             #response.xpath("(//table[@class='table-techniques'])/tbody/tr//td/a/text()").get()
             if technique_id is not None:
 
-                loader = ItemLoader(item=TacticItem(), response=response)
-                loader.add_xpath('technique_id', "//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()")
-                loader.add_xpath('name', "//h1//text()")
-                loader.add_xpath('date_created', "//div//*[contains(text(), 'Created:')]//parent::div/text()")
-                loader.add_xpath('tactic_desc', "//div[@class='description-body']//p//text()")
-                loader.add_xpath('date_modified', "//div//*[contains(text(), 'Last Modified:')]//parent::div/text()")
+                tech_loader = ItemLoader(item=TacticItem(), response=response)
+                tech_loader.add_xpath('technique_id', "//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()")
+                tech_loader.add_xpath('name', "//h1//text()")
+                tech_loader.add_xpath('date_created', "//div//*[contains(text(), 'Created:')]//parent::div/text()")
+                tech_loader.add_xpath('tactic_desc', "//div[@class='description-body']//p//text()")
+                tech_loader.add_xpath('date_modified', "//div//*[contains(text(), 'Last Modified:')]//parent::div/text()")
 
                 #Parse Mitigation Data
                 mitigation_rows = response.xpath("//h2[@id='mitigations']/following::table/tbody/tr")
                 if len(mitigation_rows) >= 1:
                 #for index, row in enumerate(mitigation_rows):
-                    loader.add_xpath('mitigation_id', "//h2[@id='mitigations']/following::tbody//tr//td[1]//a//text()")
+                    tech_loader.add_xpath('mitigation_id', "//h2[@id='mitigations']/following::tbody//tr//td[1]//a//text()")
                 else:
-                    loader.add_value('mitigation_id', 'Null')
+                    tech_loader.add_value('mitigation_id', 'Null')
                     #loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
                     #loader.add_xpath('technique_name', "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
-                yield loader.load_item()
+
+                # Parse Detection
+                detection_rows = response.xpath("//h2[@id='detection']/following::table/tbody/tr")
+                if len(detection_rows) >= 1:
+                 tech_loader.add_xpath('detection_id',"//h2[@id='detection']/following::tbody[1]//tr//td[1]//a//text()")
+                else:
+                    tech_loader.add_value('detection_id', 'Null')
+                yield tech_loader.load_item()
 
