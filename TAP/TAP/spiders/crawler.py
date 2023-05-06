@@ -100,7 +100,7 @@ class Crawler1Spider(CrawlSpider):
                 if len(technique_rows) > 1:
                     # for index, row in enumerate(technique_rows):
                     mitig_loader.add_xpath('technique_id',
-                                     "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
+                                     "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
                 else:
                     mitig_loader.add_value('technique_id', 'Null')
 
