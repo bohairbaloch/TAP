@@ -80,10 +80,6 @@ class SoftwareTapItem(scrapy.Item):
         output_processor=TakeFirst()
     )
     technique_id = scrapy.Field()
-
-    group_id = scrapy.Field(
-        input_processor=MapCompose(sanitize_item),
-        output_processor=TakeFirst()
-    )  # tactic id
-    #technique_id = scrapy.Field() # technique id
+    #
+    group_id = scrapy.Field()
 

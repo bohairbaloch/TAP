@@ -4,8 +4,11 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 import sqlite3
+#To utilize pymongo client
 import pymongo
 import logging
+#To resolve SSL certificate error for Atlas MongoDB
+import certifi
 
 from .items import TacticItem
 from .items import SoftwareTapItem
@@ -96,14 +99,19 @@ class MongoDBPipeLine:
         #Get information from settings.py
         return cls(
             mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'project9'),
+            mongo_db=crawler.settings.get('MONGO_DATABASE', 'scrapy'),
             mongo_coll=crawler.settings.get('MONGO_COLL_TACTICS', 'tactics'),
             mongo_coll_soft=crawler.settings.get('MONGO_COLL_SOFTWARE', 'software'),
         )
 
     def open_spider(self, spider):
         #Open db connection with initilizing spider
-        self.client = pymongo.MongoClient(self.mongo_uri)
+        #CloudDB lines to fix SSL error and complete connection
+        ca = certifi.where()
+        self.client = pymongo.MongoClient(self.mongo_uri, tlsCAFile=ca)
+
+        #Only uncomment if using Local mongoDB and comment the CloudDB line above:
+        #self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
         self.collecion = self.db[self.mongo_coll]
         self.collecion1= self.db[self.mongo_coll_soft]
@@ -119,7 +127,6 @@ class MongoDBPipeLine:
             exists = self.db[self.mongo_coll].find_one_and_update(
                 {"tactic_id": dict(item)["tactic_id"]},
                 #logging.debug("Tactic Item already exists"),
-
                 {"$set": dict(item)}
                 #upsert=True
                 #logging.debug("Item Updated")
@@ -132,10 +139,10 @@ class MongoDBPipeLine:
 
         #process software item
         if isinstance(item, SoftwareTapItem):
-            exists = self.db[self.mongo_coll_soft].find_one(
+            exists = self.db[self.mongo_coll_soft].find_one_and_update(
                 {"software_id": dict(item)["software_id"]},
-                logging.debug("Software Item already exists")
-                #{"$set": dict(item)},
+                #logging.debug("Software Item already exists")
+                {"$set": dict(item)},
                 #upsert=True
             )
             if not exists:
