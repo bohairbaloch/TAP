@@ -97,7 +97,7 @@ class Crawler1Spider(CrawlSpider):
 
                 # Parse Techniques Addressed by Mitigation
                 technique_rows = response.xpath("//h2[@id='techniques']/following::table/tbody/tr")
-                if len(technique_rows) > 1:
+                if len(technique_rows) >= 1:
                     # for index, row in enumerate(technique_rows):
                     mitig_loader.add_xpath('technique_id',
                                      "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
@@ -125,7 +125,7 @@ class Crawler1Spider(CrawlSpider):
                 # Parse Technique
                 technique_rows = response.xpath("//h2[@id='techniques']/following::tbody[1]/tr")
                 # for index, row in enumerate(technique_rows):
-                if len(technique_rows) > 1:
+                if len(technique_rows) >= 1:
                     group_loader.add_xpath('technique_id',
                                           "//h2[@id='techniques']/following::tbody[1]//tr//td[2]//a//text()")
                 else:
@@ -134,7 +134,7 @@ class Crawler1Spider(CrawlSpider):
                 # Parse Group data
                 # group_id: str = item.field(default="NA")
                 group_rows = response.xpath("//h2[@id='groups']/following::table/tbody/tr")
-                if len(group_rows) > 1:
+                if len(group_rows) >= 1:
                     group_loader.add_xpath('group_id',
                                           "//h2[@id='groups']/following::tbody[2]//tr//td[1]//a//text()")
                 else:
