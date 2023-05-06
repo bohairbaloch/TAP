@@ -77,14 +77,24 @@ ITEM_PIPELINES = {
 
 #Spider Variables:
 
-
+MONGO_URI = "mongodb+srv://admin:admin@scraper.id9n8cs.mongodb.net/?retryWrites=true&w=majority"
+MONGO_DATABASE = "project9"
+=======
 #Cloud DB
-MONGO_URI = "mongodb+srv://userid:password@exampledomain.com/?retryWrites=true&w=majority"
+#MONGO_URI = "mongodb+srv://userid:password@exampledomain.com/?retryWrites=true&w=majority"
 #Uncomment if using local MongoDB and add credentials as well as correct ip address, then comment the above line
 #MONGO_URI = "mongodb://userid:password@192.168.1.113:27017/scrapy"
-MONGO_DATABASE ="scrapy"
+#MONGO_DATABASE ="scrapy"
+
+
+
 MONGO_COLL_TACTICS ="tactics"
 MONGO_COLL_SOFTWARE ="software"
+
+###########################Marwan#################
+MONGO_COLL_MITIGATIONS ="mitigations"
+MONGO_COLL_GROUPS ="groups"
+##########################END#####################
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
