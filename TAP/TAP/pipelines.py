@@ -12,6 +12,7 @@ import certifi
 
 from .items import TacticItem
 from .items import SoftwareTapItem
+from .items import TechniqueTapItem
 from itemadapter import ItemAdapter
 
 
@@ -69,6 +70,10 @@ class SqlPipeline:
             self.store_soft(item)
             return item
 
+        if isinstance(item, TechniqueTapItem):
+            #print("TechniqueItem:", item)
+            self.store_tech(item)
+            return item
     def store_db(self, item):
         ##Insert data statement
         print("SQLTactic:", item)

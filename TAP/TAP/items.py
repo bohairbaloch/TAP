@@ -83,3 +83,29 @@ class SoftwareTapItem(scrapy.Item):
     #
     group_id = scrapy.Field()
 
+class TechniqueTapItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    technique_id = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )  # tactic id
+    technique_name = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    date_created = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+    date_modified = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+    technique_desc = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    mitigation_id = scrapy.Field()
+    #
+    detection_id = scrapy.Field()
