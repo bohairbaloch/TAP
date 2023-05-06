@@ -76,10 +76,15 @@ ITEM_PIPELINES = {
 #LOG_FILE = "/tmp/scrapy.log"
 
 #Spider Variables:
-MONGO_URI = "mongodb://userid:password@192.168.1.113:27017/scrapy"
+MONGO_URI = "mongodb+srv://admin:admin@scraper.id9n8cs.mongodb.net/?retryWrites=true&w=majority"
 MONGO_DATABASE = "project9"
 MONGO_COLL_TACTICS ="tactics"
 MONGO_COLL_SOFTWARE ="software"
+
+###########################Marwan#################
+MONGO_COLL_MITIGATIONS ="mitigations"
+MONGO_COLL_GROUPS ="groups"
+##########################END#####################
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
