@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T0836/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:34:54 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 923E:7E1D:36A039:3D01B8:64573625
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:24:54 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437094.105424,VS0,VE220
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 5fd75e18ef3c379dde95f5d1d74446a39940b81b

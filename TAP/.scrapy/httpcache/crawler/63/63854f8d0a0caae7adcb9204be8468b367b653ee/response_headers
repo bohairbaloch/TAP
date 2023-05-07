@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T0832/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:35:08 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 71FE:09F8:3330AF:398E66:64573633
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:25:09 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437109.848691,VS0,VE224
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 8712873425180c8c6703fa870b42c4f0090b5766
