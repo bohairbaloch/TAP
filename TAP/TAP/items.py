@@ -106,8 +106,8 @@ class TechniqueTapItem(scrapy.Item):
         input_processor=MapCompose(sanitize_item),
         output_processor=TakeFirst()
     )
-    subtechnique_id = scrapy.Field()
+    #subtechnique_id = scrapy.Field()
 
-    mitigation_id = scrapy.Field()
+    #mitigation_id = scrapy.Field()
     #
     detection_id = scrapy.Field()
