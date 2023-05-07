@@ -65,7 +65,7 @@ class Crawler1Spider(CrawlSpider):
                 if len(technique_rows) >= 1:
                     soft_loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody[1]//tr//td[2]//a//text()")
                 else:
-                    soft_loader.add_value('technique_id', 'Null')
+                    soft_loader.add_value('technique_id', 'NA')
 
                 #Parse Group data
                 #group_id: str = item.field(default="NA")
@@ -73,7 +73,7 @@ class Crawler1Spider(CrawlSpider):
                 if len(group_rows) >= 1:
                     soft_loader.add_xpath('group_id', "//h2[@id='groups']/following::tbody[1]//tr//td[1]//a//text()")
                 else:
-                    soft_loader.add_value('group_id', 'Null')
+                    soft_loader.add_value('group_id', 'NA')
                     #soft_loader.replace_value("group_id", 'Default')
                 # for index, row in enumerate(group_rows):
                 # loader.add_xpath('group_id', "//h2[@id='groups']/following::tbody//tr//td[1]//a//text()")
@@ -102,7 +102,7 @@ class Crawler1Spider(CrawlSpider):
                     mitig_loader.add_xpath('technique_id',
                                      "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
                 else:
-                    mitig_loader.add_value('technique_id', 'Null')
+                    mitig_loader.add_value('technique_id', 'NA')
 
                 yield mitig_loader.load_item()
 
@@ -129,7 +129,7 @@ class Crawler1Spider(CrawlSpider):
                     group_loader.add_xpath('technique_id',
                                           "//h2[@id='techniques']/following::tbody[1]//tr//td[2]//a//text()")
                 else:
-                    group_loader.add_value('technique_id', 'Null')
+                    group_loader.add_value('technique_id', 'NA')
 
                 # Parse Group data
                 # group_id: str = item.field(default="NA")
@@ -138,7 +138,7 @@ class Crawler1Spider(CrawlSpider):
                     group_loader.add_xpath('group_id',
                                           "//h2[@id='groups']/following::tbody[2]//tr//td[1]//a//text()")
                 else:
-                    group_loader.add_value('group_id', 'Null')
+                    group_loader.add_value('group_id', 'NA')
 
                 yield group_loader.load_item()
 
