@@ -21,9 +21,12 @@ class Crawler1Spider(CrawlSpider):
     allowed_domains = ["attack.mitre.org"]
     start_urls = ["https://attack.mitre.org/"]
 
-    #rules = (Rule(LinkExtractor(allow=r"tactics/"), callback="parse_tactic_items", follow=True),)
-    rules = (Rule(LinkExtractor(allow=[r'tactics/', 'software/', 'mitigations/', 'groups/']), callback="parse_items", follow=True),)
-    #rules = (Rule(LinkExtractor(allow=r"tactics/"), callback="parse_items", follow=True),)
+
+    rules = (
+            Rule(LinkExtractor(allow=[r'tactics/', 'software/', 'mitigations/', 'groups/'], deny=(r'versions/')), callback="parse_items", follow=True),
+
+             )
+
 
     def parse_items(self, response):
         if 'tactics/' in response.url:
