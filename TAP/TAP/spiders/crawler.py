@@ -1,4 +1,5 @@
 import scrapy
+import re
 from itemloaders import processors
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -21,12 +22,10 @@ class Crawler1Spider(CrawlSpider):
     allowed_domains = ["attack.mitre.org"]
     start_urls = ["https://attack.mitre.org/"]
 
-
     rules = (
-            Rule(LinkExtractor(allow=[r'tactics/', 'software/', 'mitigations/', 'groups/'], deny=(r'versions/')), callback="parse_items", follow=True),
-
+            Rule(LinkExtractor(allow=[r'tactics/', 'software/', 'mitigations/', 'groups/'],
+                               deny=(r'versions/')), callback="parse_items", follow=True),
              )
-
 
     def parse_items(self, response):
         if 'tactics/' in response.url:
@@ -46,7 +45,7 @@ class Crawler1Spider(CrawlSpider):
                 #for index, row in enumerate(technique_rows):
                     loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
                 else:
-                    loader.add_value('technique_id', 'Null')
+                    loader.add_value('technique_id', 'NA')
                     #loader.add_xpath('technique_id', "//h2[@id='techniques']/following::tbody//tr//td[1]//a//text()")
                     #loader.add_xpath('technique_name', "//h2[@id='techniques']/following::tbody//tr//td[2]//a//text()")
                 yield loader.load_item()
@@ -146,5 +145,18 @@ class Crawler1Spider(CrawlSpider):
                 yield group_loader.load_item()
 
 ##########################END#####################
+
+        #Placeholder for Techniques
+
+
+
+
+
+
+
+
+        #Placeholder for Sub-Techniques
+        #elif re.search('\/techniques\/T.{4}\.*\/.*\/', response.url):
+         #   print("Sub-technique URL:", response.url)
 
 
