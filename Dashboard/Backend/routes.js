@@ -26,4 +26,29 @@ router.get("/mitigations", async (req, res) => {
     res.json(mitigations);
 });
 
+router.get("/software/count", async (req, res) => {
+  const db = await connect();
+  const count = await db.collection("software").countDocuments();
+  res.json({ count });
+});
+
+router.get("/tactics/count", async (req, res) => {
+  const db = await connect();
+  const count = await db.collection("tactics").countDocuments();
+  res.json({ count });
+});
+
+router.get("/groups/count", async (req, res) => {
+  const db = await connect();
+  const count = await db.collection("groups").countDocuments();
+  res.json({ count });
+});
+
+router.get("/mitigations/count", async (req, res) => {
+  const db = await connect();
+  const count = await db.collection("mitigations").countDocuments();
+  res.json({ count });
+});
+
+
 module.exports = router;

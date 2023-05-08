@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,7 +6,7 @@ import {
   faSortUp,
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Highlight.css";
+import "./custom.css";
 
 interface Group {
   _id: string;
@@ -16,10 +16,13 @@ interface Group {
   date_modified: string;
   group_desc: string;
   technique_id: string[];
+  trRef?: React.RefObject<HTMLTableRowElement>;
 }
 
 interface GroupListProps {
   highlightedGroupId?: string;
+  groupCount: number;
+  resetHighlightedRow: () => void;
 }
 
 type SortableKeys =
@@ -28,7 +31,10 @@ type SortableKeys =
   | "date_created"
   | "date_modified";
 
-const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
+const GroupList: React.FC<GroupListProps> = ({
+  highlightedGroupId,
+  groupCount,
+}) => {
   const [groupList, setGroupList] = useState<Group[]>([]);
   const [sortKey, setSortKey] = useState<string>("group_id");
   const [sortOrder, setSortOrder] = useState<number>(1);
@@ -37,7 +43,11 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
     async function fetchData() {
       try {
         const response = await axios.get("/api/groups");
-        setGroupList(response.data);
+        const groupsWithRefs = response.data.map((group: Group) => ({
+          ...group,
+          trRef: React.createRef<HTMLTableRowElement>(),
+        }));
+        setGroupList(groupsWithRefs);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,6 +55,19 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (highlightedGroupId) {
+      const highlightedGroup = groupList.find(
+        (group) => group.group_id === highlightedGroupId
+      );
+
+      highlightedGroup?.trRef?.current?.scrollIntoView({
+        behavior: "auto",
+        block: "center",
+      });
+    }
+  }, [highlightedGroupId, groupList]);
 
   const handleSort = (key: SortableKeys) => {
     if (sortKey === key) {
@@ -62,7 +85,9 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
   return (
     <div className="card">
       <div className="card-header">
-        <h2>Groups</h2>
+        <h2 className="mb-4 d-flex justify-content-between">
+          Groups<span className="text-muted">Total: {groupCount}</span>
+        </h2>
       </div>
       <div>
         <table className="table table-striped table-bordered">
@@ -92,7 +117,10 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_created")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_created")}
+              >
                 Date Created{" "}
                 <FontAwesomeIcon
                   icon={
@@ -104,7 +132,10 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_modified")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_modified")}
+              >
                 Date Modified{" "}
                 <FontAwesomeIcon
                   icon={
@@ -124,6 +155,7 @@ const GroupList: React.FC<GroupListProps> = ({ highlightedGroupId }) => {
             {groupList.map((group) => (
               <tr
                 key={group._id}
+                ref={group.trRef}
                 className={
                   group.group_id === highlightedGroupId ? "table-warning" : ""
                 }

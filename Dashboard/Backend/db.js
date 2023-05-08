@@ -6,7 +6,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function connect() {
     try {
         await client.connect();
-        const db = client.db("project9");
+        const db = client.db("scrapyMain");
         console.log("Connected to MongoDB");
         return db;
     } catch (error) {

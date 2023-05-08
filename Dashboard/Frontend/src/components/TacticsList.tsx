@@ -17,9 +17,13 @@ interface Tactic {
   technique_id: string[];
 }
 
+interface TacticsListProps {
+  tacticCount: number;
+}
+
 type SortableKeys = "tactic_id" | "name" | "date_created" | "date_modified";
 
-const TacticsList: React.FC = () => {
+const TacticsList: React.FC<TacticsListProps> = ({ tacticCount }) => {
   const [tacticsList, setTacticsList] = useState<Tactic[]>([]);
   const [sortKey, setSortKey] = useState<SortableKeys>("tactic_id");
   const [sortOrder, setSortOrder] = useState<number>(1);
@@ -53,7 +57,9 @@ const TacticsList: React.FC = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <h2>Tactics</h2>
+        <h2 className="mb-4 d-flex justify-content-between">
+          Tactics<span className="text-muted">Total: {tacticCount}</span>
+        </h2>
       </div>
       <div>
         <table className="table table-striped table-bordered">
@@ -83,7 +89,10 @@ const TacticsList: React.FC = () => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_created")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_created")}
+              >
                 Date Created{" "}
                 <FontAwesomeIcon
                   icon={
@@ -95,7 +104,10 @@ const TacticsList: React.FC = () => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_modified")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_modified")}
+              >
                 Date Modified{" "}
                 <FontAwesomeIcon
                   icon={

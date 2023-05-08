@@ -16,13 +16,17 @@ interface Mitigation {
   date_modified: string;
 }
 
+interface MitigationListProps {
+  mitigationCount: number;
+}
+
 type SortableKeys =
   | "mitigation_id"
   | "mitigation_name"
   | "date_created"
   | "date_modified";
 
-const MitigationList: React.FC = () => {
+const MitigationList: React.FC<MitigationListProps> = ({ mitigationCount }) => {
   const [mitigationsList, setMitigationsList] = useState<Mitigation[]>([]);
   const [sortKey, setSortKey] = useState<SortableKeys>("mitigation_id");
   const [sortOrder, setSortOrder] = useState<number>(1);
@@ -56,7 +60,10 @@ const MitigationList: React.FC = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <h2>Mitigations</h2>
+        <h2 className="mb-4 d-flex justify-content-between">
+          Mitigations
+          <span className="text-muted">Total: {mitigationCount}</span>
+        </h2>
       </div>
       <div>
         <table className="table table-striped table-bordered">
@@ -86,7 +93,10 @@ const MitigationList: React.FC = () => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_created")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_created")}
+              >
                 Date Created{" "}
                 <FontAwesomeIcon
                   icon={
@@ -98,7 +108,10 @@ const MitigationList: React.FC = () => {
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_modified")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_modified")}
+              >
                 Date Modified{" "}
                 <FontAwesomeIcon
                   icon={

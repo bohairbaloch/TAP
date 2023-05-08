@@ -6,6 +6,7 @@ import {
   faSortUp,
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
+import "./custom.css";
 
 interface Software {
   _id: string;
@@ -15,13 +16,14 @@ interface Software {
   date_modified: string;
   software_desc: string;
   technique_id: string[];
-  group_id: string;
+  group_id: string[];
 }
 
 interface SoftwareListProps {
   highlightedGroupId: string;
   setHighlightedGroupId: React.Dispatch<React.SetStateAction<string>>;
   selectGroupTable: () => void;
+  softwareCount: number;
 }
 
 type SortableKeys =
@@ -34,6 +36,7 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
   highlightedGroupId,
   setHighlightedGroupId,
   selectGroupTable,
+  softwareCount,
 }) => {
   const [softwareList, setSoftwareList] = useState<Software[]>([]);
   const [sortKey, setSortKey] = useState<string>("software_id");
@@ -68,7 +71,10 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
   return (
     <div className="card">
       <div className="card-header">
-        <h2>Software</h2>
+        <h2 className="mb-4 d-flex justify-content-between">
+          Software
+          <span className="text-muted">Total: {softwareCount}</span>
+        </h2>
       </div>
       <div>
         <table className="table table-striped table-bordered">
@@ -98,7 +104,10 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_created")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_created")}
+              >
                 Date Created{" "}
                 <FontAwesomeIcon
                   icon={
@@ -110,7 +119,10 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                   }
                 />
               </th>
-              <th onClick={() => handleSort("date_modified")}>
+              <th
+                className="wide-date-column"
+                onClick={() => handleSort("date_modified")}
+              >
                 Date Modified{" "}
                 <FontAwesomeIcon
                   icon={
@@ -137,16 +149,21 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                 <td>{software.software_desc}</td>
                 <td>{software.technique_id.join(", ")}</td>
                 <td>
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      selectGroupTable();
-                      setHighlightedGroupId(software.group_id);
-                    }}
-                  >
-                    {software.group_id}
-                  </a>
+                  {software.group_id.map((groupId, index) => (
+                    <React.Fragment key={groupId}>
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          selectGroupTable();
+                          setHighlightedGroupId(groupId);
+                        }}
+                      >
+                        {groupId}
+                      </a>
+                      {index < software.group_id.length - 1 && ", "}
+                    </React.Fragment>
+                  ))}
                 </td>
               </tr>
             ))}
