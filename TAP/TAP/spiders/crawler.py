@@ -156,7 +156,7 @@ class Crawler1Spider(CrawlSpider):
 
 
         #Placeholder for Sub-Techniques
-        elif re.search('\/techniques\/T.{4}\.*\/.*\/', response.url):
-            print("Sub-technique URL:", response.url)
+        #elif re.search('\/techniques\/T.{4}\.*\/.*\/', response.url):
+         #   print("Sub-technique URL:", response.url)
 
 
