@@ -87,8 +87,7 @@ class Crawler1Spider(CrawlSpider):
                 yield soft_loader.load_item()
 
         elif 'techniques/' in response.url:
-            techniquerow_id = response.xpath(
-                "//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()[2]").get()
+            techniquerow_id = response.xpath("//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()[2]").get()
             # techniquerow_id = response.xpath("//*[@id='card-id']/div[2]").get()
             # response.xpath("//div/table[@class='table-techniques' and contains(text(), '')]").get()
             # response.xpath("(//table[@class='table-techniques'])/tbody/tr//td/a/text()").get()
@@ -98,34 +97,31 @@ class Crawler1Spider(CrawlSpider):
                 tech_loader.add_xpath('technique_id',
                                       "//div//*[@class='h5 card-title' and contains(text(), 'ID:')]//parent::div/text()")
                 tech_loader.add_xpath('technique_name', "//h1//text()")
-                tech_loader.add_xpath('date_created',
-                                      "normalize-space(//div//*[contains(text(), 'Created:')]//parent::div/text()[2])")
+                tech_loader.add_xpath('date_created', "normalize-space(//div//*[contains(text(), 'Created:')]//parent::div/text()[2])")
                 tech_loader.add_xpath('technique_desc', "//div[@class='description-body']//p//text()")
-                tech_loader.add_xpath('date_modified',
-                                      "normalize-space(//div//*[contains(text(), 'Last Modified:')]//parent::div/text()[2])")
+                tech_loader.add_xpath('date_modified', "normalize-space(//div//*[contains(text(), 'Last Modified:')]//parent::div/text()[2])")
 
                 # Parse Sub-Techniques Data
-                #subtechnique_rows = response.xpath("//h5[@id='sub-techniques']/following::table/tbody/tr")
-                #if len(subtechnique_rows) >= 1:
-
-                 #   tech_loader.add_xpath('subtechnique_id',
-                 #                         "//h5[@id='sub-techniques']/following::tbody//tr//td[1]//a//text()")
-                #else:
-                 #   tech_loader.add_value('subtechnique_id', 'NA')
+                subtechnique_rows = response.xpath("//h5[@id='sub-techniques']/following::table[1]/tbody/tr")
+                #subtechnique_rows = response.xpath("//div//*[@id='subtechnique-parent-name']/following::table/tbody/tr//td[1]")
+                # subtechnique_rows = response.xpath("// div //*[@id='subtechniques-card-header']/following::table/tbody/tr//td[1]")
+                if len(subtechnique_rows) >= 1:
+                    tech_loader.add_xpath('subtechnique_id',"//h5[@id='sub-techniques']/following::tbody[1]//tr//td[1]//a//text()")
+                else:
+                    tech_loader.add_value('subtechnique_id', 'NA')
 
                 # Parse Mitigation Data
+                mitigation_rows = response.xpath("//h2[@id='mitigations']/following::table[1]/tbody/tr")
                 #mitigation_rows = response.xpath("//h2[@id='mitigations']/following::table/tbody/tr")
-                #if len(mitigation_rows) >= 1:
-                 #   tech_loader.add_xpath('mitigation_id',
-                  #                        "//h2[@id='mitigations']/following::tbody//tr//td[1]//a//text()")
-                #else:
-                 #   tech_loader.add_value('mitigation_id', 'NA')
+                if len(mitigation_rows) >= 1:
+                    tech_loader.add_xpath('mitigation_id', "//h2[@id='mitigations']/following::tbody[1]//tr//td[1]//a//text()")
+                else:
+                    tech_loader.add_value('mitigation_id', 'NA')
 
                 # Parse Detection
-                detection_rows = response.xpath("//h2[@id='detection']/following::table/tbody/tr")
+                detection_rows = response.xpath("//h2[@id='detection']/following::table[1]/tbody/tr")
                 if len(detection_rows) >= 1:
-                    tech_loader.add_xpath('detection_id',
-                                          "//h2[@id='detection']/following::tbody[1]//tr//td[1]//a//text()")
+                    tech_loader.add_xpath('detection_id', "//h2[@id='detection']/following::tbody[1]//tr//td[1]//a//text()")
                 else:
                     tech_loader.add_value('detection_id', 'NA')
                 yield tech_loader.load_item()

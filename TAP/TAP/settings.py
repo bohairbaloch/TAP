@@ -82,7 +82,7 @@ ITEM_PIPELINES = {
 MONGO_URI = "mongodb+srv://admin:admin@scraper.id9n8cs.mongodb.net/?retryWrites=true&w=majority"
 #Uncomment if using local MongoDB and add credentials as well as correct ip address, then comment the above line
 #MONGO_URI = "mongodb://userid:password@192.168.1.113:27017/scrapy"
-MONGO_DATABASE ="scrapy"
+MONGO_DATABASE ="scrapyTestAN"
 MONGO_COLL_TACTICS ="tactics"
 MONGO_COLL_SOFTWARE ="software"
 MONGO_COLL_TECHNIQUE ="technique"
