@@ -83,6 +83,36 @@ class SoftwareTapItem(scrapy.Item):
     #
     group_id = scrapy.Field()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###########################Marwan#################
 class mitigationsItem(scrapy.Item):
     # define the fields for your item here like:
