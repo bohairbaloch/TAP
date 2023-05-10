@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/software/S0500/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 13:59:15 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 8A20:74AB:145623:15FCA1:64550954
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 13:49:15 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683294555.141549,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: a5a16090d9064e14bc0190fa594e402fdaa52d83

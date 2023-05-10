@@ -1,0 +1,19 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+Location: https://attack.mitre.org/software/S1019/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 13:48:27 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 87B8:09F8:225A29:256FDE:645506C8
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 13:38:27 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683293907.034231,VS0,VE222
+Vary: Accept-Encoding
+X-Fastly-Request-Id: e86a0f1e33b573df7531bdc0239404df24a453d4
