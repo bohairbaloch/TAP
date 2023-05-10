@@ -15,6 +15,11 @@ from .items import SoftwareTapItem
 from .items import TechniqueTapItem
 from itemadapter import ItemAdapter
 
+###########################Marwan#################
+from .items import mitigationsItem
+from .items import groupsItem
+##########################END#####################
+
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
@@ -31,6 +36,12 @@ class SqlPipeline:
         self.create_tactic_table()
         self.create_software_table()
         self.create_technique_table()
+
+###########################Marwan#################
+        self.create_mitigations_table()
+        self.create_groups_table()
+##########################END#####################
+
 
     def create_tactic_table(self):
         ##Create table if none exists
@@ -49,8 +60,8 @@ class SqlPipeline:
         date_created TEXT,
         software_desc TEXT           
         )""")
-
-    def create_technique_table(self):
+        
+        def create_technique_table(self):
         ##Create table if none exists
         self.curr.execute("""CREATE TABLE IF NOT EXISTS tbl_technique(
         technique_id TEXT PRIMARY KEY,
@@ -58,6 +69,27 @@ class SqlPipeline:
         date_created TEXT,
         technique_desc TEXT           
         )""")
+        
+        ###########################Marwan#################
+    def create_mitigations_table(self):
+        ##Create table if none exists
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS tbl_mitigations(
+        mitigation_id TEXT PRIMARY KEY,
+        mitigation_name TEXT,
+        date_created TEXT,
+        mitigation_desc TEXT             
+        )""")
+
+    def create_groups_table(self):
+        ##Create table if none exists
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS tbl_groups(
+        group_id TEXT PRIMARY KEY,
+        group_name TEXT,
+        date_created TEXT,
+        group_desc TEXT           
+        )""")
+        ##########################END#####################
+
     def process_item(self, item, spider):
         if isinstance(item, TacticItem):
             #print("BeforeDBCall:", item)
@@ -74,6 +106,18 @@ class SqlPipeline:
             #print("TechniqueItem:", item)
             self.store_tech(item)
             return item
+
+        ###########################Marwan#################
+        if isinstance(item, mitigationsItem):
+            self.store_mitig(item)
+            return item
+
+        if isinstance(item, groupsItem):
+            self.store_group(item)
+            return item
+         ##########################END#####################
+
+
     def store_db(self, item):
         ##Insert data statement
         print("SQLTactic:", item)
@@ -92,6 +136,7 @@ class SqlPipeline:
         self.conn.commit()
         return item
 
+
     # store techniques
     def store_tech(self, item):
         ##Insert data statement
@@ -103,22 +148,45 @@ class SqlPipeline:
         return item
 
 
+    ###########################Marwan#################
+    def store_mitig(self, item):
+        ##Insert data statement
+        print("SQLmitigations:", item)
+        self.curr.execute(
+            """INSERT OR IGNORE INTO tbl_mitigations (mitigation_id, mitigation_name, date_created,mitigation_desc) VALUES (?,?,?,?)""", (
+                (item['mitigation_id'], item['mitigation_name'], item['date_created'], item['mitigation_desc'])))
+        self.conn.commit()
+        return item
+
+    def store_group(self, item):
+        ##Insert data statement
+        print("SQLgroups:", item)
+        self.curr.execute(
+            """INSERT OR IGNORE INTO tbl_groups (group_id, group_name, date_created, group_desc) VALUES (?,?,?,?)""", (
+                (item['group_id'], item['group_name'], item['date_created'], item['group_desc'])))
+        self.conn.commit()
+        return item
+     ##########################END#####################
+
+
 class SecondPipeline:
     def process_item(self, item, spider):
         return item
 
 
 class MongoDBPipeLine:
-    #MongoDB Pipeline
-
-    def __init__(self, mongo_uri, mongo_db, mongo_coll, mongo_coll_soft, mongo_coll_tech):
+  #MongoDB Pipeline
+    def __init__(self, mongo_uri, mongo_db, mongo_coll, mongo_coll_soft, mongo_coll_mitigations, mongo_coll_groups, mongo_coll_tech):
         #Initiliaze the pipeline with MonogoDB details in settings.py
         self.mongo_uri = mongo_uri
         self.mongo_db = mongo_db
         self.mongo_coll = mongo_coll
         self.mongo_coll_soft = mongo_coll_soft
         self.mongo_coll_tech = mongo_coll_tech
-
+    ###########################Marwan#################
+        self.mongo_coll_mitigations = mongo_coll_mitigations
+        self.mongo_coll_groups = mongo_coll_groups
+    ##########################END#####################
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -129,6 +197,10 @@ class MongoDBPipeLine:
             mongo_coll=crawler.settings.get('MONGO_COLL_TACTICS', 'tactics'),
             mongo_coll_soft=crawler.settings.get('MONGO_COLL_SOFTWARE', 'software'),
             mongo_coll_tech=crawler.settings.get('MONGO_COLL_TECHNIQUE', 'technique')
+     ###########################Marwan#################
+            mongo_coll_mitigations=crawler.settings.get('MONGO_COLL_MITIGATIONS', 'mitigations'),
+            mongo_coll_groups=crawler.settings.get('MONGO_COLL_GROUPS', 'groups'),
+     ##########################END#####################
         )
 
     def open_spider(self, spider):
@@ -143,6 +215,11 @@ class MongoDBPipeLine:
         self.collecion = self.db[self.mongo_coll]
         self.collecion1= self.db[self.mongo_coll_soft]
         self.collecion2 = self.db[self.mongo_coll_tech]
+
+    ###########################Marwan#################
+        self.collecion2 = self.db[self.mongo_coll_mitigations]
+        self.collecion3 = self.db[self.mongo_coll_groups]
+    ##########################END#####################
 
     def close_spider(self, spider):
         #Clean after spider is closed
@@ -181,6 +258,7 @@ class MongoDBPipeLine:
                 logging.debug("Item added to MongoDB")
                 print("MongoSoftware Item :", item)
 
+
         # process technique item
         if isinstance(item, TechniqueTapItem):
             exists = self.db[self.mongo_coll_tech].find_one_and_update(
@@ -197,3 +275,28 @@ class MongoDBPipeLine:
                 logging.debug("Item added to MongoDB")
                 print("MongoTechnique Item :", item)
 
+
+      ###########################Marwan#################
+        #process mitigations item
+        print("Before Process Mongo:", item)
+        if isinstance(item, mitigationsItem):
+            exists = self.db[self.mongo_coll_mitigations].find_one_and_update(
+                {"mitigation_id": dict(item)["mitigation_id"]},
+
+                {"$set": dict(item)}
+            )
+            if not exists:
+                self.db[self.mongo_coll_mitigations].insert_one(dict(item))
+                logging.debug("Item added to MongoDB")
+
+        #process Groups item
+        if isinstance(item, groupsItem):
+            exists = self.db[self.mongo_coll_groups].find_one(
+                {"group_id": dict(item)["group_id"]},
+                logging.debug("Group Item already exists")
+
+            )
+            if not exists:
+                self.db[self.mongo_coll_groups].insert_one(dict(item))
+                logging.debug("Item added to MongoDB")
+        ##########################END#####################

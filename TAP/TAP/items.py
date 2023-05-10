@@ -82,7 +82,7 @@ class SoftwareTapItem(scrapy.Item):
     technique_id = scrapy.Field()
     #
     group_id = scrapy.Field()
-
+    
 class TechniqueTapItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
@@ -91,7 +91,7 @@ class TechniqueTapItem(scrapy.Item):
         output_processor=TakeFirst()
     )  # tactic id
     technique_name = scrapy.Field(
-        input_processor=MapCompose(sanitize_item),
+       input_processor=MapCompose(sanitize_item),
         output_processor=TakeFirst()
     )
     date_created = scrapy.Field(
@@ -111,3 +111,65 @@ class TechniqueTapItem(scrapy.Item):
     mitigation_id = scrapy.Field()
 
     detection_id = scrapy.Field()
+    
+###########################Marwan#################
+class mitigationsItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    mitigation_id = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
+
+    mitigation_name = scrapy.Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
+
+    date_created = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+
+    mitigation_desc = scrapy.Field(
+
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    technique_id = scrapy.Field()
+
+    date_modified = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+
+class groupsItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    group_id = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    group_name = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    date_created = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+    date_modified = scrapy.Field(
+        input_processor=MapCompose(convert_date),
+        output_processor=TakeFirst()
+    )
+    group_desc = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+    technique_id = scrapy.Field()
+
+    software_id = scrapy.Field(
+        input_processor=MapCompose(sanitize_item),
+        output_processor=TakeFirst()
+    )
+##########################END#####################
