@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T0861/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:34:23 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: B66C:461C:B11DB:D2143:64573607
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:24:23 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437064.594554,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 82a5adb3ebeb8c107c7a28a0e66bdce287f7f137

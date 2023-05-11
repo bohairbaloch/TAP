@@ -1,0 +1,19 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+Location: https://attack.mitre.org/techniques/T0888/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:34:05 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 2168:0673:3444E2:3AA018:645735F0
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:24:05 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437045.966534,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: c3f633ce6d65bbca7d07c2abb103b5da91353389

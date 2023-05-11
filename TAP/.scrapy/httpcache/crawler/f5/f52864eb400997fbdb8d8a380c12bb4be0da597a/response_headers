@@ -1,0 +1,19 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+Location: https://attack.mitre.org/tactics/TA0032/
+Access-Control-Allow-Origin: *
+Expires: Sat, 06 May 2023 05:24:49 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: C5C2:15A9:2974D3:2DD629:6455E245
+Accept-Ranges: bytes
+Date: Sat, 06 May 2023 05:14:49 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11235-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683350090.671620,VS0,VE222
+Vary: Accept-Encoding
+X-Fastly-Request-Id: f98f5a05de1910275bb9eef55a20dd7bf227e122
