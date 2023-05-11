@@ -9,6 +9,7 @@ interface HomePageProps {
     tactics: number;
     groups: number;
     mitigations: number;
+    techniques: number;
   };
 }
 

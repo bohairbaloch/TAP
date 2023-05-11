@@ -4,7 +4,8 @@ import SoftwareList from "./components/SoftwareList";
 import TacticsList from "./components/TacticsList";
 import GroupList from "./components/GroupList";
 import MitigationList from "./components/MitigationList";
-import "./components/custom.css";
+import TechniqueList from "./components/TechniqueList";
+import "./App.css";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -13,9 +14,21 @@ const App: React.FC = () => {
 
   const [selectedTable, setSelectedTable] = useState("home");
   const [highlightedGroupId, setHighlightedGroupId] = useState<string>("");
+  const [highlightedMitigationId, setHighlightedMitigationId] =
+    useState<string>("");
+  const [highlightedTechniqueId, setHighlightedTechniqueId] =
+    useState<string>("");
 
   const selectGroupTable = () => {
     setSelectedTable("groups");
+  };
+
+  const selectTechniqueTable = () => {
+    setSelectedTable("techniques");
+  };
+
+  const selectMitigationTable = () => {
+    setSelectedTable("mitigations");
   };
 
   const handleNavigation = (table: string) => {
@@ -24,6 +37,8 @@ const App: React.FC = () => {
 
   const resetHighlightedRow = () => {
     setHighlightedGroupId("");
+    setHighlightedMitigationId("");
+    setHighlightedTechniqueId("");
   };
 
   const [tableDataCounts, setTableDataCounts] = useState({
@@ -31,6 +46,7 @@ const App: React.FC = () => {
     tactics: 0,
     groups: 0,
     mitigations: 0,
+    techniques: 0,
   });
 
   const fetchDataCounts = async () => {
@@ -40,12 +56,14 @@ const App: React.FC = () => {
     const mitigationsCount = await (
       await fetch("/api/mitigations/count")
     ).json();
+    const techniquesCount = await (await fetch("/api/techniques/count")).json();
 
     setTableDataCounts({
       software: softwareCount.count,
       tactics: tacticsCount.count,
       groups: groupsCount.count,
       mitigations: mitigationsCount.count,
+      techniques: techniquesCount.count,
     });
   };
 
@@ -115,6 +133,18 @@ const App: React.FC = () => {
             >
               Mitigations
             </a>
+            <a
+              href="#"
+              className={`list-group-item list-group-item-action${
+                selectedTable === "techniques" ? " active" : ""
+              }`}
+              onClick={() => {
+                setSelectedTable("techniques");
+                resetHighlightedRow();
+              }}
+            >
+              Techniques
+            </a>
           </div>
         </div>
         <div className="content">
@@ -126,24 +156,41 @@ const App: React.FC = () => {
           )}
           {selectedTable === "software" && (
             <SoftwareList
-              highlightedGroupId={highlightedGroupId}
               setHighlightedGroupId={setHighlightedGroupId}
               selectGroupTable={selectGroupTable}
+              selectTechniqueTable={selectTechniqueTable}
+              setHighlightedTechniqueId={setHighlightedTechniqueId}
               softwareCount={tableDataCounts.software}
             />
           )}
           {selectedTable === "tactics" && (
-            <TacticsList tacticCount={tableDataCounts.tactics} />
+            <TacticsList
+              selectTechniqueTable={selectTechniqueTable}
+              setHighlightedTechniqueId={setHighlightedTechniqueId}
+              tacticCount={tableDataCounts.tactics}
+            />
           )}
           {selectedTable === "groups" && (
             <GroupList
+              selectTechniqueTable={selectTechniqueTable}
+              setHighlightedTechniqueId={setHighlightedTechniqueId}
               highlightedGroupId={highlightedGroupId}
               groupCount={tableDataCounts.groups}
-              resetHighlightedRow={resetHighlightedRow}
             />
           )}
           {selectedTable === "mitigations" && (
-            <MitigationList mitigationCount={tableDataCounts.mitigations} />
+            <MitigationList
+              highlightedMitigationId={highlightedMitigationId}
+              mitigationCount={tableDataCounts.mitigations}
+            />
+          )}
+          {selectedTable === "techniques" && (
+            <TechniqueList
+              selectMitigationTable={selectMitigationTable}
+              setHighlightedMitigationId={setHighlightedMitigationId}
+              highLightedTechniqueId={highlightedTechniqueId}
+              techniqueCount={tableDataCounts.techniques}
+            />
           )}
         </div>
       </div>

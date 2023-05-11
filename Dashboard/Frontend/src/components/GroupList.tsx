@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,9 +20,10 @@ interface Group {
 }
 
 interface GroupListProps {
+  setHighlightedTechniqueId: React.Dispatch<React.SetStateAction<string>>;
+  selectTechniqueTable: () => void;
   highlightedGroupId?: string;
   groupCount: number;
-  resetHighlightedRow: () => void;
 }
 
 type SortableKeys =
@@ -32,12 +33,15 @@ type SortableKeys =
   | "date_modified";
 
 const GroupList: React.FC<GroupListProps> = ({
+  setHighlightedTechniqueId,
+  selectTechniqueTable,
   highlightedGroupId,
   groupCount,
 }) => {
   const [groupList, setGroupList] = useState<Group[]>([]);
   const [sortKey, setSortKey] = useState<string>("group_id");
   const [sortOrder, setSortOrder] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -48,8 +52,10 @@ const GroupList: React.FC<GroupListProps> = ({
           trRef: React.createRef<HTMLTableRowElement>(),
         }));
         setGroupList(groupsWithRefs);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     }
 
@@ -70,108 +76,138 @@ const GroupList: React.FC<GroupListProps> = ({
   }, [highlightedGroupId, groupList]);
 
   const handleSort = (key: SortableKeys) => {
-    if (sortKey === key) {
-      setSortOrder(sortOrder * -1);
-    } else {
-      setSortKey(key);
-      setSortOrder(1);
-    }
+    const newSortOrder = sortKey === key ? sortOrder * -1 : 1;
+    const newSortKey = key;
+
     const sortedList = [...groupList].sort((a, b) =>
-      a[key] > b[key] ? 1 * sortOrder : -1 * sortOrder
+      a[newSortKey] > b[newSortKey] ? 1 * newSortOrder : -1 * newSortOrder
     );
+    setSortKey(newSortKey);
+    setSortOrder(newSortOrder);
     setGroupList(sortedList);
   };
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="mb-4 d-flex justify-content-between">
-          Groups<span className="text-muted">Total: {groupCount}</span>
-        </h2>
-      </div>
-      <div>
-        <table className="table table-striped table-bordered">
-          <thead className="text-center align-middle">
-            <tr>
-              <th onClick={() => handleSort("group_id")}>
-                Group ID{" "}
-                <FontAwesomeIcon
-                  icon={
-                    sortKey === "group_id"
-                      ? sortOrder === 1
-                        ? faSortUp
-                        : faSortDown
-                      : faSort
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("group_name")}>
-                Group Name{" "}
-                <FontAwesomeIcon
-                  icon={
-                    sortKey === "group_name"
-                      ? sortOrder === 1
-                        ? faSortUp
-                        : faSortDown
-                      : faSort
-                  }
-                />
-              </th>
-              <th
-                className="wide-date-column"
-                onClick={() => handleSort("date_created")}
-              >
-                Date Created{" "}
-                <FontAwesomeIcon
-                  icon={
-                    sortKey === "date_created"
-                      ? sortOrder === 1
-                        ? faSortUp
-                        : faSortDown
-                      : faSort
-                  }
-                />
-              </th>
-              <th
-                className="wide-date-column"
-                onClick={() => handleSort("date_modified")}
-              >
-                Date Modified{" "}
-                <FontAwesomeIcon
-                  icon={
-                    sortKey === "date_modified"
-                      ? sortOrder === 1
-                        ? faSortUp
-                        : faSortDown
-                      : faSort
-                  }
-                />
-              </th>
-              <th>Description</th>
-              <th>Technique IDs</th>
-            </tr>
-          </thead>
-          <tbody>
-            {groupList.map((group) => (
-              <tr
-                key={group._id}
-                ref={group.trRef}
-                className={
-                  group.group_id === highlightedGroupId ? "table-warning" : ""
-                }
-              >
-                <td>{group.group_id}</td>
-                <td>{group.group_name}</td>
-                <td>{group.date_created}</td>
-                <td>{group.date_modified}</td>
-                <td>{group.group_desc}</td>
-                <td>{group.technique_id.join(", ")}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      {" "}
+      {!isLoading ? (
+        <div className="card">
+          <div className="card-header">
+            <h2 className="mb-4 d-flex justify-content-between">
+              Groups<span className="text-muted">Total: {groupCount}</span>
+            </h2>
+          </div>
+          <div>
+            <table className="table table-striped table-bordered">
+              <thead className="text-center align-middle">
+                <tr>
+                  <th onClick={() => handleSort("group_id")}>
+                    Group ID{" "}
+                    <FontAwesomeIcon
+                      icon={
+                        sortKey === "group_id"
+                          ? sortOrder === 1
+                            ? faSortUp
+                            : faSortDown
+                          : faSort
+                      }
+                    />
+                  </th>
+                  <th onClick={() => handleSort("group_name")}>
+                    Group Name{" "}
+                    <FontAwesomeIcon
+                      icon={
+                        sortKey === "group_name"
+                          ? sortOrder === 1
+                            ? faSortUp
+                            : faSortDown
+                          : faSort
+                      }
+                    />
+                  </th>
+                  <th
+                    className="wide-date-column"
+                    onClick={() => handleSort("date_created")}
+                  >
+                    Date Created{" "}
+                    <FontAwesomeIcon
+                      icon={
+                        sortKey === "date_created"
+                          ? sortOrder === 1
+                            ? faSortUp
+                            : faSortDown
+                          : faSort
+                      }
+                    />
+                  </th>
+                  <th
+                    className="wide-date-column"
+                    onClick={() => handleSort("date_modified")}
+                  >
+                    Date Modified{" "}
+                    <FontAwesomeIcon
+                      icon={
+                        sortKey === "date_modified"
+                          ? sortOrder === 1
+                            ? faSortUp
+                            : faSortDown
+                          : faSort
+                      }
+                    />
+                  </th>
+                  <th>Description</th>
+                  <th>Technique IDs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupList.map((group) => (
+                  <tr
+                    key={group._id}
+                    ref={group.trRef}
+                    className={
+                      group.group_id === highlightedGroupId
+                        ? "table-warning"
+                        : ""
+                    }
+                  >
+                    <td>{group.group_id}</td>
+                    <td>{group.group_name}</td>
+                    <td>{group.date_created}</td>
+                    <td>{group.date_modified}</td>
+                    <td>{group.group_desc}</td>
+                    <td>
+                      {group.technique_id.map((techniqueId, index) => (
+                        <React.Fragment key={techniqueId}>
+                          {techniqueId.trim() !== "NA" ? (
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                selectTechniqueTable();
+                                setHighlightedTechniqueId(techniqueId);
+                              }}
+                            >
+                              {techniqueId.trim()}
+                            </a>
+                          ) : (
+                            techniqueId.trim()
+                          )}
+                          {index < group.technique_id.length - 1 && ", "}
+                        </React.Fragment>
+                      ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
+    </>
   );
 };
 

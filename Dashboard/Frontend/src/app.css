@@ -1,0 +1,25 @@
+.logo {
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    font-style: italic;
+    font-size: 36px;
+    color: #3b6fa2;
+    margin-bottom: 0px;
+    position: fixed;
+    z-index: 1;
+}
+
+.fixed-nav {
+    position: fixed;
+    top: 80px;
+    z-index: 1;
+}
+
+.content {
+    margin-left: 120px;
+}

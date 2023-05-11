@@ -8,48 +8,52 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./custom.css";
 
-interface Software {
+interface Technique {
   _id: string;
-  software_id: string;
-  software_name: string;
+  technique_id: string;
+  technique_name: string;
   date_created: string;
+  technique_desc: string;
   date_modified: string;
-  software_desc: string;
-  technique_id: string[];
-  group_id: string[];
+  subtechnique_id: string[];
+  mitigation_id: string[];
+  detection_id: string[];
+  trRef?: React.RefObject<HTMLTableRowElement>;
 }
 
-interface SoftwareListProps {
-  setHighlightedGroupId: React.Dispatch<React.SetStateAction<string>>;
-  setHighlightedTechniqueId: React.Dispatch<React.SetStateAction<string>>;
-  selectGroupTable: () => void;
-  selectTechniqueTable: () => void;
-  softwareCount: number;
+interface TechniqueListProps {
+  techniqueCount: number;
+  highLightedTechniqueId?: string;
+  setHighlightedMitigationId: React.Dispatch<React.SetStateAction<string>>;
+  selectMitigationTable: () => void;
 }
 
 type SortableKeys =
-  | "software_id"
-  | "software_name"
+  | "technique_id"
+  | "technique_name"
   | "date_created"
   | "date_modified";
 
-const SoftwareList: React.FC<SoftwareListProps> = ({
-  setHighlightedGroupId,
-  setHighlightedTechniqueId,
-  selectGroupTable,
-  selectTechniqueTable,
-  softwareCount,
+const TechniqueList: React.FC<TechniqueListProps> = ({
+  setHighlightedMitigationId,
+  selectMitigationTable,
+  highLightedTechniqueId,
+  techniqueCount,
 }) => {
-  const [softwareList, setSoftwareList] = useState<Software[]>([]);
-  const [sortKey, setSortKey] = useState<string>("software_id");
+  const [techniqueList, setTechniqueList] = useState<Technique[]>([]);
+  const [sortKey, setSortKey] = useState<string>("technique_id");
   const [sortOrder, setSortOrder] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("/api/software");
-        setSoftwareList(response.data);
+        const response = await axios.get("/api/techniques");
+        const techniqueWithRefs = response.data.map((technique: Technique) => ({
+          ...technique,
+          trRef: React.createRef<HTMLTableRowElement>(),
+        }));
+        setTechniqueList(techniqueWithRefs);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -60,16 +64,29 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (highLightedTechniqueId) {
+      const highLightedTechnique = techniqueList.find(
+        (technique) => technique.technique_id === highLightedTechniqueId
+      );
+
+      highLightedTechnique?.trRef?.current?.scrollIntoView({
+        behavior: "auto",
+        block: "center",
+      });
+    }
+  }, [highLightedTechniqueId, techniqueList]);
+
   const handleSort = (key: SortableKeys) => {
     const newSortOrder = sortKey === key ? sortOrder * -1 : 1;
     const newSortKey = key;
 
-    const sortedList = [...softwareList].sort((a, b) =>
+    const sortedList = [...techniqueList].sort((a, b) =>
       a[newSortKey] > b[newSortKey] ? 1 * newSortOrder : -1 * newSortOrder
     );
     setSortKey(newSortKey);
     setSortOrder(newSortOrder);
-    setSoftwareList(sortedList);
+    setTechniqueList(sortedList);
   };
 
   return (
@@ -79,19 +96,19 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
         <div className="card">
           <div className="card-header">
             <h2 className="mb-4 d-flex justify-content-between">
-              Software
-              <span className="text-muted">Total: {softwareCount}</span>
+              Techniques
+              <span className="text-muted">Total: {techniqueCount}</span>
             </h2>
           </div>
           <div>
             <table className="table table-striped table-bordered">
               <thead className="text-center align-middle">
                 <tr>
-                  <th onClick={() => handleSort("software_id")}>
-                    Software ID{" "}
+                  <th onClick={() => handleSort("technique_id")}>
+                    Technique ID{" "}
                     <FontAwesomeIcon
                       icon={
-                        sortKey === "software_id"
+                        sortKey === "technique_id"
                           ? sortOrder === 1
                             ? faSortUp
                             : faSortDown
@@ -99,11 +116,11 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                       }
                     />
                   </th>
-                  <th onClick={() => handleSort("software_name")}>
-                    Software Name{" "}
+                  <th onClick={() => handleSort("technique_name")}>
+                    Technique Name{" "}
                     <FontAwesomeIcon
                       icon={
-                        sortKey === "software_name"
+                        sortKey === "technique_name"
                           ? sortOrder === 1
                             ? faSortUp
                             : faSortDown
@@ -142,60 +159,50 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                     />
                   </th>
                   <th>Description</th>
-                  <th>Technique IDs</th>
-                  <th>Group ID</th>
+                  <th>Sub-technique IDs</th>
+                  <th>Mitigation IDs</th>
+                  <th>Detection IDs</th>
                 </tr>
               </thead>
               <tbody>
-                {softwareList.map((software) => (
-                  <tr key={software._id}>
-                    <td>{software.software_id}</td>
-                    <td>{software.software_name}</td>
-                    <td>{software.date_created}</td>
-                    <td>{software.date_modified}</td>
-                    <td>{software.software_desc}</td>
+                {techniqueList.map((technique) => (
+                  <tr
+                    key={technique._id}
+                    ref={technique.trRef}
+                    className={
+                      technique.technique_id === highLightedTechniqueId
+                        ? "table-warning"
+                        : ""
+                    }
+                  >
+                    <td>{technique.technique_id}</td>
+                    <td>{technique.technique_name}</td>
+                    <td>{technique.date_created}</td>
+                    <td>{technique.date_modified}</td>
+                    <td>{technique.technique_desc}</td>
+                    <td>{technique.subtechnique_id.join(", ")}</td>
                     <td>
-                      {software.technique_id.map((techniqueId, index) => (
-                        <React.Fragment key={techniqueId}>
-                          {techniqueId.trim() !== "NA" ? (
+                      {technique.mitigation_id.map((mitigationId, index) => (
+                        <React.Fragment key={mitigationId}>
+                          {mitigationId.trim() !== "NA" ? (
                             <a
                               href="#"
                               onClick={(e) => {
                                 e.preventDefault();
-                                selectTechniqueTable();
-                                setHighlightedTechniqueId(techniqueId.trim());
+                                selectMitigationTable();
+                                setHighlightedMitigationId(mitigationId.trim());
                               }}
                             >
-                              {techniqueId.trim()}
+                              {mitigationId.trim()}
                             </a>
                           ) : (
-                            techniqueId.trim()
+                            mitigationId.trim()
                           )}
-                          {index < software.technique_id.length - 1 && ", "}
+                          {index < technique.mitigation_id.length - 1 && ", "}
                         </React.Fragment>
                       ))}
                     </td>
-                    <td>
-                      {software.group_id.map((groupId, index) => (
-                        <React.Fragment key={groupId}>
-                          {groupId.trim() !== "NA" ? (
-                            <a
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                selectGroupTable();
-                                setHighlightedGroupId(groupId);
-                              }}
-                            >
-                              {groupId.trim()}
-                            </a>
-                          ) : (
-                            groupId.trim()
-                          )}
-                          {index < software.group_id.length - 1 && ", "}
-                        </React.Fragment>
-                      ))}
-                    </td>
+                    <td>{technique.detection_id.join(", ")}</td>
                   </tr>
                 ))}
               </tbody>
@@ -211,4 +218,4 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
   );
 };
 
-export default SoftwareList;
+export default TechniqueList;

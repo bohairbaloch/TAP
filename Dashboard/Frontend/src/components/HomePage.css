@@ -28,3 +28,7 @@
 .home-page__block--mitigations .home-page__block-inner {
     background-color: #f44336;
 }
+
+.home-page__block--techniques .home-page__block-inner {
+    background-color: #9c27b0;
+}
