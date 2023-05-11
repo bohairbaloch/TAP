@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/software/S0475/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 14:20:45 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: A5D0:7E1D:24D377:27F6DA:64550E64
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 14:10:45 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683295846.596138,VS0,VE221
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 9b86b7f5cfa49eac6c1e27415fdb70eb5523191d

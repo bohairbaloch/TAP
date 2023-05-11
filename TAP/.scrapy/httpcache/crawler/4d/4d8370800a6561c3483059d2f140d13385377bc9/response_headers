@@ -1,0 +1,19 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+Location: https://attack.mitre.org/techniques/T0873/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:34:14 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 1922:6DF7:39F8D:41EC1:645735FE
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:24:14 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437054.134040,VS0,VE228
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 546e9988b85c2902aef4838b58bf13388d5ee5f6

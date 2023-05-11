@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T1646/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:40:07 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 1C5E:7E1D:36ADF2:3D114C:6457375F
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:30:07 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437407.225987,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 1d80655f62f933302742412e2513444454cb232e

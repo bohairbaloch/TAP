@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T1424/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:39:10 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: EA3C:461C:B1DA8:D2ECC:64573725
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:29:10 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437350.076988,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 299451218a3c5b1a675a9752bcdfbb6b9dbe7a8a
