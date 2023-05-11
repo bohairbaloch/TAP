@@ -1,7 +1,7 @@
 # TAP
 Technology Application Project
 
-#how to run dashboard
+# how to run dashboard
 1. Install node.js
 2. cd Dashboard/Frontend
 3. npm i
