@@ -15,12 +15,15 @@ interface Mitigation {
   date_created: string;
   mitigation_desc: string;
   date_modified: string;
+  technique_id: string[];
   trRef?: React.RefObject<HTMLTableRowElement>;
 }
 
 interface MitigationListProps {
   highlightedMitigationId?: string;
   mitigationCount: number;
+  setHighlightedTechniqueId: React.Dispatch<React.SetStateAction<string>>;
+  selectTechniqueTable: () => void;
 }
 
 type SortableKeys =
@@ -32,6 +35,8 @@ type SortableKeys =
 const MitigationList: React.FC<MitigationListProps> = ({
   mitigationCount,
   highlightedMitigationId,
+  setHighlightedTechniqueId,
+  selectTechniqueTable,
 }) => {
   const [mitigationsList, setMitigationsList] = useState<Mitigation[]>([]);
   const [sortKey, setSortKey] = useState<SortableKeys>("mitigation_id");
@@ -154,6 +159,7 @@ const MitigationList: React.FC<MitigationListProps> = ({
                     />
                   </th>
                   <th>Description</th>
+                  <th>Related Technique IDs</th>
                 </tr>
               </thead>
               <tbody>
@@ -172,6 +178,27 @@ const MitigationList: React.FC<MitigationListProps> = ({
                     <td>{mitigation.date_created}</td>
                     <td>{mitigation.date_modified}</td>
                     <td>{mitigation.mitigation_desc}</td>
+                    <td>
+                      {mitigation.technique_id.map((techniqueId, index) => (
+                        <React.Fragment key={techniqueId}>
+                          {techniqueId.trim() !== "NA" ? (
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                selectTechniqueTable();
+                                setHighlightedTechniqueId(techniqueId.trim());
+                              }}
+                            >
+                              {techniqueId.trim()}
+                            </a>
+                          ) : (
+                            techniqueId.trim()
+                          )}
+                          {index < mitigation.technique_id.length - 1 && ", "}
+                        </React.Fragment>
+                      ))}
+                    </td>{" "}
                   </tr>
                 ))}
               </tbody>

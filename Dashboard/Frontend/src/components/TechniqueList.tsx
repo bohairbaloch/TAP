@@ -160,7 +160,7 @@ const TechniqueList: React.FC<TechniqueListProps> = ({
                   </th>
                   <th>Description</th>
                   <th>Sub-technique IDs</th>
-                  <th>Mitigation IDs</th>
+                  <th>Related Mitigation IDs</th>
                   <th>Detection IDs</th>
                 </tr>
               </thead>

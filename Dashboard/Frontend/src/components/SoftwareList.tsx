@@ -142,8 +142,8 @@ const SoftwareList: React.FC<SoftwareListProps> = ({
                     />
                   </th>
                   <th>Description</th>
-                  <th>Technique IDs</th>
-                  <th>Group ID</th>
+                  <th>Related Technique IDs</th>
+                  <th>Related Group IDs</th>
                 </tr>
               </thead>
               <tbody>

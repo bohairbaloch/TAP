@@ -132,7 +132,7 @@ const TacticsList: React.FC<TacticsListProps> = ({
                     />
                   </th>
                   <th>Description</th>
-                  <th>Technique IDs</th>
+                  <th>Related Technique IDs</th>
                 </tr>
               </thead>
               <tbody>

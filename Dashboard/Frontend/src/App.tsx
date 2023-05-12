@@ -71,7 +71,20 @@ const App: React.FC = () => {
     <div className="container mt-4">
       <div className="d-flex">
         <div className="me-2">
-          <div className="logo">TAP</div>
+          <div className="logo">
+            <a
+              href="#"
+              className={`list-group-item list-group-item-action${
+                selectedTable === "home" ? " active" : ""
+              }`}
+              onClick={() => {
+                setSelectedTable("home");
+                resetHighlightedRow();
+              }}
+            >
+              TAP
+            </a>
+          </div>
           <div className="list-group fixed-nav">
             <a
               href="#"
@@ -182,6 +195,8 @@ const App: React.FC = () => {
             <MitigationList
               highlightedMitigationId={highlightedMitigationId}
               mitigationCount={tableDataCounts.mitigations}
+              selectTechniqueTable={selectTechniqueTable}
+              setHighlightedTechniqueId={setHighlightedTechniqueId}
             />
           )}
           {selectedTable === "techniques" && (
