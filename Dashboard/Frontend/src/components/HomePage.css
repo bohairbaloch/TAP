@@ -1,0 +1,51 @@
+/* components/HomePage.css */
+.home-page__block {
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.home-page__block:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+.home-page__block-inner {
+    padding: 40px;
+    border-radius: 10px;
+    color: #ffffff;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home-page__block--software .home-page__block-inner {
+    background-color: grey;
+    
+}
+
+.home-page__block--tactics .home-page__block-inner {
+    background-color: black;
+}
+
+.home-page__block--groups .home-page__block-inner {
+    background-color: grey;
+}
+
+.home-page__block--mitigations .home-page__block-inner {
+    background-color: black;
+}
+
+.home-page__block--techniques .home-page__block-inner {
+    background-color: grey;
+}
+
+/* components/HomePage.css */
+
+.home-page__block-icon.large-icon {
+    font-size: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
