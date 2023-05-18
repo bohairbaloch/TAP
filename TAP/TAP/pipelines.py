@@ -61,7 +61,7 @@ class SqlPipeline:
         software_desc TEXT           
         )""")
         
-        def create_technique_table(self):
+    def create_technique_table(self):
         ##Create table if none exists
         self.curr.execute("""CREATE TABLE IF NOT EXISTS tbl_technique(
         technique_id TEXT PRIMARY KEY,
@@ -196,7 +196,7 @@ class MongoDBPipeLine:
             mongo_db=crawler.settings.get('MONGO_DATABASE', 'scrapy'),
             mongo_coll=crawler.settings.get('MONGO_COLL_TACTICS', 'tactics'),
             mongo_coll_soft=crawler.settings.get('MONGO_COLL_SOFTWARE', 'software'),
-            mongo_coll_tech=crawler.settings.get('MONGO_COLL_TECHNIQUE', 'technique')
+            mongo_coll_tech=crawler.settings.get('MONGO_COLL_TECHNIQUE', 'technique'),
      ###########################Marwan#################
             mongo_coll_mitigations=crawler.settings.get('MONGO_COLL_MITIGATIONS', 'mitigations'),
             mongo_coll_groups=crawler.settings.get('MONGO_COLL_GROUPS', 'groups'),

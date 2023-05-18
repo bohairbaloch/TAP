@@ -34,8 +34,8 @@ class Crawler1Spider(CrawlSpider):
     #Test Branch Rules
     #rules = (
             #Rule(LinkExtractor(allow=[r'tactics/', 'software/', 'mitigations/', 'groups/'],
-                               deny=(r'versions/')), callback="parse_items", follow=True),
-             )
+                               #deny=(r'versions/')), callback="parse_items", follow=True),
+             #)
 
 
     def parse_items(self, response):
