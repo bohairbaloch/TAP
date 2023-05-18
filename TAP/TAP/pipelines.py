@@ -92,18 +92,14 @@ class SqlPipeline:
 
     def process_item(self, item, spider):
         if isinstance(item, TacticItem):
-            #print("BeforeDBCall:", item)
             self.store_db(item)
-            #print("afterTacticDBcall:", item)
             return item
 
         if isinstance(item, SoftwareTapItem):
-            #print("SoftwareItem:", item)
             self.store_soft(item)
             return item
 
         if isinstance(item, TechniqueTapItem):
-            #print("TechniqueItem:", item)
             self.store_tech(item)
             return item
 
@@ -120,7 +116,6 @@ class SqlPipeline:
 
     def store_db(self, item):
         ##Insert data statement
-        print("SQLTactic:", item)
         self.curr.execute(
             """INSERT OR IGNORE INTO tbl_tactics (tactic_id, name, date_created,tactic_desc) VALUES (?,?,?,?)""", (
                 (item['tactic_id'], item['name'], item['date_created'], item['tactic_desc'])))
@@ -129,7 +124,6 @@ class SqlPipeline:
 
     def store_soft(self, item):
         ##Insert data statement
-        print("SoftwareSQLDB:", item)
         self.curr.execute(
             """INSERT OR IGNORE INTO tbl_software (software_id, software_name, date_created, software_desc) VALUES (?,?,?,?)""", (
                 (item['software_id'], item['software_name'], item['date_created'], item['software_desc'])))
@@ -140,7 +134,6 @@ class SqlPipeline:
     # store techniques
     def store_tech(self, item):
         ##Insert data statement
-        print("TechniqueSQLDB:", item)
         self.curr.execute(
             """INSERT OR IGNORE INTO tbl_technique (technique_id, technique_name, date_created, technique_desc) VALUES (?,?,?,?)""", (
                 (item['technique_id'], item['technique_name'], item['date_created'], item['technique_desc'])))
@@ -151,7 +144,6 @@ class SqlPipeline:
     ###########################Marwan#################
     def store_mitig(self, item):
         ##Insert data statement
-        print("SQLmitigations:", item)
         self.curr.execute(
             """INSERT OR IGNORE INTO tbl_mitigations (mitigation_id, mitigation_name, date_created,mitigation_desc) VALUES (?,?,?,?)""", (
                 (item['mitigation_id'], item['mitigation_name'], item['date_created'], item['mitigation_desc'])))
@@ -160,7 +152,6 @@ class SqlPipeline:
 
     def store_group(self, item):
         ##Insert data statement
-        print("SQLgroups:", item)
         self.curr.execute(
             """INSERT OR IGNORE INTO tbl_groups (group_id, group_name, date_created, group_desc) VALUES (?,?,?,?)""", (
                 (item['group_id'], item['group_name'], item['date_created'], item['group_desc'])))
@@ -227,19 +218,18 @@ class MongoDBPipeLine:
 
     def process_item(self, item, spider):
         #process tactics item
-        print("Before ProcessMongo:", item)
         if isinstance(item, TacticItem):
             exists = self.db[self.mongo_coll].find_one_and_update(
                 {"tactic_id": dict(item)["tactic_id"]},
                 #logging.debug("Tactic Item already exists"),
-                {"$set": dict(item)}
+                {"$set": dict(item)},
                 #upsert=True
-                #logging.debug("Item Updated")
+                logging.debug("Item Updated")
             )
             if not exists:
                 self.db[self.mongo_coll].insert_one(dict(item))
-                logging.debug("Item added to MongoDB")
-                print("MongoTactic Item:", item)
+                logging.debug("Item added to MongoDB", item)
+
 
 
         #process software item
@@ -252,11 +242,8 @@ class MongoDBPipeLine:
             )
             if not exists:
                 self.db[self.mongo_coll_soft].insert_one(dict(item))
-                #self.db['MONGO_COLL_SOFTWARE'].insert_one(dict(item))
-                #item_dict = ItemAdapter(TacticItem).asdict()
-                #self.collecion.insert_one(item_dict)
-                logging.debug("Item added to MongoDB")
-                print("MongoSoftware Item :", item)
+                logging.debug("Item added to MongoDB", item)
+
 
 
         # process technique item
@@ -272,13 +259,12 @@ class MongoDBPipeLine:
                 # self.db['MONGO_COLL_TECHNIQUE'].insert_one(dict(item))
                 # item_dict = ItemAdapter(TechniqueItem).asdict()
                 # self.collecion.insert_one(item_dict)
-                logging.debug("Item added to MongoDB")
-                print("MongoTechnique Item :", item)
+                logging.debug("Item added to MongoDB", item)
+
 
 
       ###########################Marwan#################
         #process mitigations item
-        print("Before Process Mongo:", item)
         if isinstance(item, mitigationsItem):
             exists = self.db[self.mongo_coll_mitigations].find_one_and_update(
                 {"mitigation_id": dict(item)["mitigation_id"]},
@@ -287,7 +273,7 @@ class MongoDBPipeLine:
             )
             if not exists:
                 self.db[self.mongo_coll_mitigations].insert_one(dict(item))
-                logging.debug("Item added to MongoDB")
+                logging.debug("Item added to MongoDB", item)
 
         #process Groups item
         if isinstance(item, groupsItem):
@@ -298,5 +284,7 @@ class MongoDBPipeLine:
             )
             if not exists:
                 self.db[self.mongo_coll_groups].insert_one(dict(item))
-                logging.debug("Item added to MongoDB")
+                logging.debug("Item added to MongoDB", item)
         ##########################END#####################
+
+

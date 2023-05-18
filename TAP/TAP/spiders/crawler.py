@@ -27,7 +27,7 @@ class Crawler1Spider(CrawlSpider):
     #Alex Branch Rules
     # rules = (Rule(LinkExtractor(allow=r"tactics/"), callback="parse_tactic_items", follow=True),)
     rules = (
-    Rule(LinkExtractor(allow=[r'techniques/'], deny=([r'tactic/', 'software/'])), callback="parse_items", follow=True),)
+    Rule(LinkExtractor(allow=[r'techniques/'], deny=([r'tactic/', 'software/', 'versions/'])), callback="parse_items", follow=True),)
 
     # rules = (Rule(LinkExtractor(allow=r"tactics/"), callback="parse_items", follow=True),)
     
