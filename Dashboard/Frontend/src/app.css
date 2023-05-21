@@ -14,11 +14,8 @@
     z-index: 1;
 }
 
-.fixed-nav {
-    position: fixed;
-    top: 80px;
-    z-index: 1;
-}
+
+  
 
 .content {
     margin-left: 120px;
@@ -26,4 +23,8 @@
 
 body {
     font-family: 'Space Grotesk', sans-serif;
+}
+
+.d-flex{
+    position: relative;
 }

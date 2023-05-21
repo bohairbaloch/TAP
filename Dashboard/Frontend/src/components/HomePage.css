@@ -20,7 +20,7 @@
 }
 
 .home-page__block--software .home-page__block-inner {
-    background-color: grey;
+    background-color: black;
     
 }
 
@@ -29,7 +29,7 @@
 }
 
 .home-page__block--groups .home-page__block-inner {
-    background-color: grey;
+    background-color: black;
 }
 
 .home-page__block--mitigations .home-page__block-inner {
@@ -37,7 +37,7 @@
 }
 
 .home-page__block--techniques .home-page__block-inner {
-    background-color: grey;
+    background-color: black;
 }
 
 /* components/HomePage.css */
@@ -47,5 +47,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  .yellow-icon {
+    color: #FFCC00;
+  }
+
+  .home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+  }
+  
+  .home-page__blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 50000px; /* Set a max-width if needed */
+    margin-top: 20px; /* Adjust the margin-top as per your requirements */
+  }
+  
+  .home-page__block {
+    width: calc(50% - 10px); /* Adjust the width as per your requirements */
+    margin-bottom: 20px;
+  
+  @media screen and (max-width: 768px) {
+    .home-page__block {
+      width: 100%;
+    }
+  }
   }
   
