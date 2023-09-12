@@ -27,4 +27,20 @@ MongoDB Atlas was used to create and store the database. Local MongoDB hosted on
 
 PyCharm and Visual Studio were used as IDEs.
 
+How to run dashboard on localhost:
+
+Install node.js
+
+cd Dashboard/Frontend
+
+npm i
+
+cd ../Backend
+
+npm i
+
+npm run dev
+
+open link "http://localhost:5173/" in browser
+
 
