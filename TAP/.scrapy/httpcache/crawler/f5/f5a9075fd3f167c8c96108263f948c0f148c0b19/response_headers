@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/software/S0159/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 13:46:56 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: F6E4:5E37:23E34E:270060:64550676
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 13:36:56 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683293816.340028,VS0,VE225
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 7b62897783818a43c3d86d453871bf55885aa432

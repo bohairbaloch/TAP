@@ -1,0 +1,19 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+Location: https://attack.mitre.org/techniques/T1517/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:41:28 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: FC0C:74AB:26FA20:2BE66A:645737AD
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:31:28 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437488.962303,VS0,VE227
+Vary: Accept-Encoding
+X-Fastly-Request-Id: db81d10f82cd3206c760068cf70f431d6b0ca67b

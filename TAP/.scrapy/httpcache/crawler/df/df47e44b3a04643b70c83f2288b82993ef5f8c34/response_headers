@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/software/S0268/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 14:19:48 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 22D4:74AB:14911E:163EDE:64550E2C
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 14:09:49 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683295789.820660,VS0,VE225
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 700b2a596f1a5f9f1ae5bb0f319c318efce96312

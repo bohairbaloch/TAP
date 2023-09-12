@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/techniques/T0847/
+Access-Control-Allow-Origin: *
+Expires: Sun, 07 May 2023 05:34:00 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: 619A:3953:34A45E:3AFC9F:645735F0
+Accept-Ranges: bytes
+Date: Sun, 07 May 2023 05:24:01 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11229-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683437041.778214,VS0,VE226
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 843a9788bb49c9b8fb198878120aff294568174c

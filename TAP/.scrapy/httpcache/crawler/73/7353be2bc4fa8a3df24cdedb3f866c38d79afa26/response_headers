@@ -1,0 +1,20 @@
+Content-Length: 162
+Server: GitHub.com
+Content-Type: text/html
+X-Origin-Cache: HIT
+Location: https://attack.mitre.org/tactics/mobile/
+Access-Control-Allow-Origin: *
+Expires: Fri, 05 May 2023 13:43:30 GMT
+Cache-Control: max-age=600
+X-Proxy-Cache: MISS
+X-Github-Request-Id: ED54:063E:2473E9:278A14:645505A8
+Accept-Ranges: bytes
+Date: Fri, 05 May 2023 13:33:30 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-mel11250-MEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1683293610.149099,VS0,VE216
+Vary: Accept-Encoding
+X-Fastly-Request-Id: 3859f5cc900a4f4f4cfe73ec3287554947cbd073

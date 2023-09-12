@@ -20,6 +20,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' \
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+REDIRECT_ENABLED=False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -65,26 +66,37 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 2
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "TAP.pipelines.SqlPipeline": 300,
-    "TAP.pipelines.SecondPipeline": 300,
+    #"TAP.pipelines.SqlPipeline": 300,
+    #"TAP.pipelines.SecondPipeline": 300,
     "TAP.pipelines.MongoDBPipeLine": 400,
 }
 
 #Log Global settings:
-#LOG_LEVEL = "INFO"
-#LOG_FORMAT = "%(asctime)s : %(levelname)s : %(message)s"
-#LOG_FILE = "/tmp/scrapy.log"
+#Log level to show only INFO or DEBUG etc can be set
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "%(asctime)s : %(levelname)s : %(message)s"
+#Log can be saved to a log file
+#LOG_FILE = "./tmp/scrapy.log"
 
 #Spider Variables:
 
+MONGO_URI = "mongodb+srv://admin:admin@scraper.id9n8cs.mongodb.net/?retryWrites=true&w=majority"
+MONGO_DATABASE = "scrapy"
 
 #Cloud DB
-MONGO_URI = "mongodb+srv://userid:password@exampledomain.com/?retryWrites=true&w=majority"
+#MONGO_URI = "mongodb+srv://userid:password@exampledomain.com/?retryWrites=true&w=majority"
 #Uncomment if using local MongoDB and add credentials as well as correct ip address, then comment the above line
 #MONGO_URI = "mongodb://userid:password@192.168.1.113:27017/scrapy"
-MONGO_DATABASE ="scrapy"
+#MONGO_DATABASE ="scrapy"
+
 MONGO_COLL_TACTICS ="tactics"
 MONGO_COLL_SOFTWARE ="software"
+MONGO_COLL_TECHNIQUE ="technique"
+
+###########################Marwan#################
+MONGO_COLL_MITIGATIONS ="mitigations"
+MONGO_COLL_GROUPS ="groups"
+##########################END#####################
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -101,7 +113,7 @@ MONGO_COLL_SOFTWARE ="software"
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
+#HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 HTTPCACHE_DIR = "httpcache"
 #HTTPCACHE_IGNORE_HTTP_CODES = []
@@ -111,3 +123,5 @@ HTTPCACHE_DIR = "httpcache"
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+
